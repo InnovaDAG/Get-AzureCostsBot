@@ -3,6 +3,11 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 
+// Azure Management dependencies
+using Microsoft.Rest.Azure.Authentication;
+using Microsoft.Azure.Management.Billing;
+using Microsoft.Azure.Management.Billing.Models;
+
 // For more information about this template visit http://aka.ms/azurebots-csharp-basic
 [Serializable]
 public class EchoDialog : IDialog<object>
@@ -30,18 +35,24 @@ public class EchoDialog : IDialog<object>
     public virtual async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
     {
         var message = await argument;
-        if (message.Text == "reset")
+        /* if (message.Text == "reset")
+         {
+             PromptDialog.Confirm(
+                 context,
+                 AfterResetAsync,
+                 "Are you sure you want to reset the count?",
+                 "Didn't get that!",
+                 promptStyle: PromptStyle.Auto);
+         }
+         else
+         {
+             await context.PostAsync($"{this.count++}: You said {message.Text}");
+             context.Wait(MessageReceivedAsync);
+         }
+         */
+        if (message.Text == "cost")
         {
-            PromptDialog.Confirm(
-                context,
-                AfterResetAsync,
-                "Are you sure you want to reset the count?",
-                "Didn't get that!",
-                promptStyle: PromptStyle.Auto);
-        }
-        else
-        {
-            await context.PostAsync($"{this.count++}: You said {message.Text}");
+            await context.PostAsync("HOLI");
             context.Wait(MessageReceivedAsync);
         }
     }
